@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Report</title>
+    <!-- Add Bootstrap CSS link -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h1 class="text-center">Tax Report</h1>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Personal Information</h5>
+                        <p class="card-text">
+                            <strong>Name:</strong> {{ data.persona.nombre }}<br>
+                            <strong>Identification:</strong> {{ data.persona.identificación }}<br>
+                            <strong>Date of Birth:</strong> {{ data.persona.fecha_nacimiento }}<br>
+                            <strong>Dependents:</strong> {{ data.persona.dependientes }}<br>
+                            <strong>Marital Status:</strong> {{ data.persona.estado_civil }}<br>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Income</h5>
+                        <p class="card-text">
+                            <strong>Salary:</strong> ${{ data.ingresos.salario }}<br>
+                            <strong>Other Incomes:</strong><br>
+                            - Alquileres: ${{ data.ingresos.otros_ingresos.alquileres }}<br>
+                            - Intereses Bancarios: ${{ data.ingresos.otros_ingresos.intereses_bancarios }}<br>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Deductions</h5>
+                        <p class="card-text">
+                            <strong>Donations:</strong> ${{ data.deducciones.donaciones_caritativas }}<br>
+                            <strong>Medical Expenses:</strong> ${{ data.deducciones.gastos_médicos }}<br>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Tax Credits</h5>
+                        <p class="card-text">
+                            <strong>Child Tax Credit:</strong> ${{ data.creditos_fiscales.credito_por_hijos }}<br>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Taxes</h5>
+                        <p class="card-text">
+                            <strong>Social Security Tax:</strong> ${{ data.impuestos.impuesto_a_la_seguridad_social }}<br>
+                            <strong>Income Tax:</strong> ${{ data.impuestos.impuesto_sobre_la_renta }}<br>
+                            <strong>Other Taxes:</strong> ${{ data.impuestos.otros_impuestos }}<br>
+                            <strong>Total Taxes:</strong> ${{ data.impuestos.total_impuestos }}<br>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tax Calculations -->
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Tax Calculations</h5>
+                        <p class="card-text">
+                          <strong>1. Ingresos Gravables:</strong> ${{ "%.2f"|format((data.ingresos.salario + data.ingresos.otros_ingresos.alquileres + data.ingresos.otros_ingresos.intereses_bancarios) - (data.deducciones.donaciones_caritativas + data.deducciones.gastos_médicos)) }}<br>
+                          <strong>2. Créditos Fiscales:</strong> ${{ "%.2f"|format(data.creditos_fiscales.credito_por_hijos) }}<br>
+                          <strong>3. Impuesto a la Renta:</strong> ${{ "%.2f"|format(data.impuestos.impuesto_sobre_la_renta) }}<br>
+                          <strong>4. Otros Impuestos y Retenciones:</strong> ${{ "%.2f"|format(data.impuestos.impuesto_a_la_seguridad_social + data.impuestos.otros_impuestos) }}<br>
+                          <strong>5. Impuesto Mensual Total:</strong> ${{ "%.2f"|format(data.impuestos.impuesto_sobre_la_renta + data.impuestos.impuesto_a_la_seguridad_social + data.impuestos.otros_impuestos) }}<br>                          
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and jQuery links (required for Bootstrap components) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
